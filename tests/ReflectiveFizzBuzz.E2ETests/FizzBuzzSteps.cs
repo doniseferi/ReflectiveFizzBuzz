@@ -36,14 +36,15 @@ class FizzBuzzSteps
     [Then(@"I should see the correct FizzBuzz sequence in the console")]
     public void ThenIShouldSeeTheCorrectFizzBuzzSequenceInTheConsole()
     {
-        var expectedResult = string.Join(
-            Environment.NewLine, 
+        var fizzBuzzResults =
             Enumerable.Range(1, 100)
-                .Select(x => 
-                    new PositiveInteger(x))
-                .Select(_fizzBuzzService.Classify)
-                .ToList());
+                .Select(x => _fizzBuzzService.Classify(new PositiveInteger(x)));
 
-        Assert.Equal(expectedResult, _resultFromConsole.ConsoleOutput);
+        var expectedConsoleOutput = string.Join(
+            Environment.NewLine, 
+            fizzBuzzResults) + Environment.NewLine;
+
+
+        Assert.Equal(expectedConsoleOutput, _resultFromConsole.ConsoleOutput);
     }
 }
