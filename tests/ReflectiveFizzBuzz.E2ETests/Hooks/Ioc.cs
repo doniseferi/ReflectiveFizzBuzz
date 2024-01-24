@@ -20,6 +20,6 @@ public class Ioc
             new SystemUnderTestExecutionHandler(
                 AppDomain.CurrentDomain.GetConsoleAppExePath()));
 
-        _objectContainer.RegisterTypeAs<FizzBuzzService, IFizzBuzzService>();
+        _objectContainer.RegisterInstanceAs<IFizzBuzzService>(new FizzBuzzService());
     }
 }

@@ -22,6 +22,7 @@ class FizzBuzzSteps
         ArgumentNullException.ThrowIfNull(fizzBuzzService);
 
         _systemUnderTestExecutionHandler = systemUnderTestExecutionHandler;
+        _fizzBuzzService = fizzBuzzService;
     }
 
     [Given(@"the application is started")]
@@ -29,21 +30,20 @@ class FizzBuzzSteps
     {
     }
 
-    [When(@"I run the console application")]
-    public async Task WhenIRunTheConsoleApplication() => _resultFromConsole = await _systemUnderTestExecutionHandler.ExecuteAsync();
-
     [When(@"the application calculates the FizzBuzz sequence for numbers from 1 to 100")]
-    public void WhenTheApplicationCalculatesTheFizzBuzzSequences()
-    {
-    }
+    public async Task WhenTheApplicationCalculatesTheFizzBuzzSequences() => _resultFromConsole = await _systemUnderTestExecutionHandler.ExecuteAsync();
 
     [Then(@"I should see the correct FizzBuzz sequence in the console")]
-    public void ThenIShouldSeeTheCorrectFizzBuzzSequenceInTheConsole() =>
-        Enumerable.Range(1, 100)
-            .Select(x => x)
-            .ToList()
-            .ForEach(number => Assert.Contains(
-                _fizzBuzzService.Classify(
-                    new PositiveInteger(number)), 
-                _resultFromConsole.ConsoleOutput));
+    public void ThenIShouldSeeTheCorrectFizzBuzzSequenceInTheConsole()
+    {
+        var expectedResult = string.Join(
+            Environment.NewLine, 
+            Enumerable.Range(1, 100)
+                .Select(x => 
+                    new PositiveInteger(x))
+                .Select(_fizzBuzzService.Classify)
+                .ToList());
+
+        Assert.Equal(expectedResult, _resultFromConsole.ConsoleOutput);
+    }
 }
