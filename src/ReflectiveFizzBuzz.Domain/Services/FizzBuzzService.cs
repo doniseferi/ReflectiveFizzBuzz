@@ -14,5 +14,9 @@ internal class FizzBuzzService : IFizzBuzzService
         _ruleRepository = ruleRepository;
     }
 
-    public string Classify(PositiveInteger number) => _ruleRepository.Get(number).Apply(number);
+    public string Classify(PositiveInteger number) => _ruleRepository
+        .Get(number)
+        .Match(
+            Some: rule => rule.Apply(number), 
+            None: () => number.Value.ToString());
 }

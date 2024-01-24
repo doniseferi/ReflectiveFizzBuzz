@@ -1,4 +1,6 @@
-﻿namespace ReflectiveFizzBuzz.E2ETests.Hooks;
+﻿using ReflectiveFizzBuzz.Domain.Repositories;
+
+namespace ReflectiveFizzBuzz.E2ETests.Hooks;
 
 using BoDi;
 using Extensions;
@@ -20,6 +22,6 @@ public class Ioc
             new SystemUnderTestExecutionHandler(
                 AppDomain.CurrentDomain.GetConsoleAppExePath()));
 
-        _objectContainer.RegisterInstanceAs<IFizzBuzzService>(new FizzBuzzService());
+        _objectContainer.RegisterInstanceAs<IFizzBuzzService>(new FizzBuzzService(new RuleRepository(new IRule[]{new BuzzRule(), new FizzRule(), new FizzBuzzRule() })));
     }
 }

@@ -1,11 +1,12 @@
-﻿using ReflectiveFizzBuzz.Domain.Services;
+﻿using ReflectiveFizzBuzz.Domain.Repositories;
+using ReflectiveFizzBuzz.Domain.Services;
 using ReflectiveFizzBuzz.Domain.ValueTypes;
 
 namespace ReflectiveFizzBuzz.Domain.UnitTests;
 
 public class FizzBuzzTests
 {
-    private readonly IFizzBuzzService _fizzBuzzService = new FizzBuzzService();
+    private readonly IFizzBuzzService _fizzBuzzService = new FizzBuzzService(new RuleRepository(new IRule[] {new BuzzRule(), new FizzRule(), new FizzBuzzRule()}));
 
 
     [Fact]

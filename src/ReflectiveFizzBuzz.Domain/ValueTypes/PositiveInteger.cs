@@ -2,7 +2,7 @@
 
 public class PositiveInteger
 {
-    public PositiveInteger(uint value)
+    public PositiveInteger(int value)
     {
         if (value == 0)
             throw new ArgumentException("Value must be greater than zero.", nameof(value));
@@ -10,5 +10,5 @@ public class PositiveInteger
         Value = value;
     }
 
-    public uint Value { get; } 
+    public int Value { get; } 
 }
