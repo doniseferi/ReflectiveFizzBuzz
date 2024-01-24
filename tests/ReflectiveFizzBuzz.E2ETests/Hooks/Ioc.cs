@@ -5,23 +5,20 @@ namespace ReflectiveFizzBuzz.E2ETests.Hooks;
 using BoDi;
 using Extensions;
 using Handler;
-using ReflectiveFizzBuzz.Domain.Services;
+using Domain.Rules;
+using Domain.Services;
 using TechTalk.SpecFlow;
 
 [Binding]
-public class Ioc
+public class Ioc(IObjectContainer objectContainer)
 {
-    private readonly IObjectContainer _objectContainer;
-
-    public Ioc(IObjectContainer objectContainer) => _objectContainer = objectContainer;
-
     [BeforeScenario]
     public void RegisterComponents()
     {
-        _objectContainer.RegisterInstanceAs(
+        objectContainer.RegisterInstanceAs(
             new SystemUnderTestExecutionHandler(
                 AppDomain.CurrentDomain.GetConsoleAppExePath()));
 
-        _objectContainer.RegisterInstanceAs<IFizzBuzzService>(new FizzBuzzService(new RuleRepository(new IRule[]{new BuzzRule(), new FizzRule(), new FizzBuzzRule() })));
+        objectContainer.RegisterInstanceAs<IFizzBuzzService>(new FizzBuzzService(new RuleRepository(new IRule[]{new BuzzRule(), new FizzRule(), new FizzBuzzRule() })));
     }
 }

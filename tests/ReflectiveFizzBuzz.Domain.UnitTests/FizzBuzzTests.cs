@@ -1,4 +1,5 @@
 ﻿using ReflectiveFizzBuzz.Domain.Repositories;
+using ReflectiveFizzBuzz.Domain.Rules;
 using ReflectiveFizzBuzz.Domain.Services;
 using ReflectiveFizzBuzz.Domain.ValueTypes;
 
@@ -6,8 +7,14 @@ namespace ReflectiveFizzBuzz.Domain.UnitTests;
 
 public class FizzBuzzTests
 {
-    private readonly IFizzBuzzService _fizzBuzzService = new FizzBuzzService(new RuleRepository(new IRule[] {new BuzzRule(), new FizzRule(), new FizzBuzzRule()}));
-
+    private readonly IFizzBuzzService _fizzBuzzService = new FizzBuzzService(
+        new RuleRepository(
+            new IRule[]
+            {
+                new BuzzRule(),
+                new FizzRule(),
+                new FizzBuzzRule()
+            }));
 
     [Fact]
     public void ReturnsFizzForMultiplesOfThree()
@@ -47,18 +54,18 @@ public class FizzBuzzTests
     }
 
 
-    private IReadOnlyList<PositiveInteger> GetMultiplesOf3() => 
+    public static IReadOnlyList<PositiveInteger> GetMultiplesOf3() => 
         GetMultiplesOf(3)
             .Where(x => x.Value % 5 != 0)
         .ToList();
 
-    private IReadOnlyList<PositiveInteger> GetMultiplesOf5() =>
+    private static IReadOnlyList<PositiveInteger> GetMultiplesOf5() =>
         GetMultiplesOf(5)
             .Where(x => x.Value % 3 != 0)
             .ToList();
 
 
-    private IReadOnlyList<PositiveInteger> GetMultiplesOf(int divisor) =>
+    private static IReadOnlyList<PositiveInteger> GetMultiplesOf(int divisor) =>
         Enumerable.Range(1, 100)
             .Select(x => x) 
             .Where(x => x % divisor == 0)
