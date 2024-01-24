@@ -1,10 +1,9 @@
-﻿using ReflectiveFizzBuzz.Domain;
-
-namespace ReflectiveFizzBuzz.E2ETests.Hooks;
+﻿namespace ReflectiveFizzBuzz.E2ETests.Hooks;
 
 using BoDi;
 using Extensions;
 using Handler;
+using ReflectiveFizzBuzz.Domain.Services;
 using TechTalk.SpecFlow;
 
 [Binding]

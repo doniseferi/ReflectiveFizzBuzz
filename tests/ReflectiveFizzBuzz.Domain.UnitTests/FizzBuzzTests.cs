@@ -1,4 +1,7 @@
-﻿namespace ReflectiveFizzBuzz.Domain.UnitTests;
+﻿using ReflectiveFizzBuzz.Domain.Services;
+using ReflectiveFizzBuzz.Domain.ValueTypes;
+
+namespace ReflectiveFizzBuzz.Domain.UnitTests;
 
 public class FizzBuzzTests
 {
@@ -8,14 +11,14 @@ public class FizzBuzzTests
     [Fact]
     public void ReturnsFizzForMultiplesOfThree()
     {
-        var multiplesOfThree = GetMultiplesOf(3);
+        var multiplesOfThree = GetMultiplesOf3();
         Assert.All(multiplesOfThree, number => Assert.Equal("Fizz", _fizzBuzzService.Classify(number)));
     }
 
     [Fact]
     public void ReturnsBuzzForMultiplesOfFive()
     {
-        var multiplesOfFive = GetMultiplesOf(5);
+        var multiplesOfFive = GetMultiplesOf5();
         Assert.All(multiplesOfFive, number => Assert.Equal("Buzz", _fizzBuzzService.Classify(number)));
     }
 
@@ -42,7 +45,19 @@ public class FizzBuzzTests
                     new PositiveInteger(number))));
     }
 
-    private List<PositiveInteger> GetMultiplesOf(uint divisor) =>
+
+    private IReadOnlyList<PositiveInteger> GetMultiplesOf3() => 
+        GetMultiplesOf(3)
+            .Where(x => x.Value % 5 != 0)
+        .ToList();
+
+    private IReadOnlyList<PositiveInteger> GetMultiplesOf5() =>
+        GetMultiplesOf(5)
+            .Where(x => x.Value % 3 != 0)
+            .ToList();
+
+
+    private IReadOnlyList<PositiveInteger> GetMultiplesOf(int divisor) =>
         Enumerable.Range(1, 100)
             .Select(x => x) 
             .Where(x => x % divisor == 0)

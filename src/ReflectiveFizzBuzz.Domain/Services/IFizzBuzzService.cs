@@ -1,17 +1,12 @@
 ﻿using System.Runtime.CompilerServices;
+using ReflectiveFizzBuzz.Domain.ValueTypes;
 [assembly: InternalsVisibleTo("ReflectiveFizzBuzz.Domain.UnitTests"),
            InternalsVisibleTo("ReflectiveFizzBuzz.E2ETests")]
 
-namespace ReflectiveFizzBuzz.Domain;
+namespace ReflectiveFizzBuzz.Domain.Services;
 
 
 internal interface IFizzBuzzService
 {
     string Classify(PositiveInteger number);
-}
-
-internal class FizzBuzzService : IFizzBuzzService
-{
-    public string Classify(PositiveInteger number) =>
-        number.Value.ToString();
 }
